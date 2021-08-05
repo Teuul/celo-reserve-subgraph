@@ -1,27 +1,29 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Celo generic indexing (Reserve)
+repository: https://github.com/teuul/celo-generic-exchange
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
-    network: mainnet
+    name: Reserve
+    network: celo
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
-      abi: Gravity
+      address: '0x9380fA34Fd9e4Fd14c06305fd7B6199089eD4eb9'
+      abi: Reserve
+      startBlock: 2947
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - Event
+        - Field
+        - Array
+        - Item
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: Reserve
+          file: ./abis/Reserve.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,string,string)
-          handler: handleNewGravatar
-        - event: UpdatedGravatar(uint256,address,string,string)
-          handler: handleUpdatedGravatar
+        - event: AssetAllocationSet(bytes32[],uint256[])
+          handler: handleAssetAllocationSet
       file: ./src/mapping.ts
